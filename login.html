@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BookTok Studio — Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0c0a0d;--s1:#131016;--s2:#1a161e;
+  --bdr:#2d2636;--tx:#ede8f0;--tx2:#a899b8;--tx3:#6d5f80;
+  --acc:#b87fc4;--acc2:#d4a8e0;--gold:#c8a060;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Inter',sans-serif;
+}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);
+  min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;
+  background:radial-gradient(ellipse 60% 50% at 30% 20%,#1f0a2d22,transparent),
+             radial-gradient(ellipse 50% 40% at 70% 80%,#0a101d18,transparent);
+  pointer-events:none}
+
+.box{background:var(--s1);border:1px solid var(--bdr);border-radius:20px;
+  padding:48px 40px;width:100%;max-width:400px;position:relative;z-index:1}
+
+.logo{text-align:center;margin-bottom:36px}
+.logo-badge{display:inline-flex;align-items:center;gap:6px;background:var(--s2);border:1px solid var(--bdr);
+  padding:5px 14px;border-radius:100px;font-size:11px;color:var(--acc);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px}
+.logo h1{font-family:var(--serif);font-size:36px;font-weight:400;
+  background:linear-gradient(140deg,var(--tx) 0%,var(--acc2) 60%,var(--gold) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+label{font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:.08em}
+input{background:var(--s2);border:1px solid var(--bdr);border-radius:9px;
+  padding:12px 14px;color:var(--tx);font-family:var(--sans);font-size:14px;
+  width:100%;outline:none;transition:border-color .2s,box-shadow .2s}
+input:focus{border-color:var(--acc);box-shadow:0 0 0 3px #b87fc422}
+input::placeholder{color:var(--tx3)}
+
+.btn{width:100%;padding:13px;margin-top:8px;
+  background:linear-gradient(130deg,#7a2d8a,#b87fc4 50%,#c06090);
+  border:none;border-radius:10px;color:#fff;font-family:var(--sans);
+  font-size:14px;font-weight:500;cursor:pointer;transition:all .25s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px #b87fc430}
+
+.err{background:#180a0a;border:1px solid #5a2020;border-radius:9px;
+  padding:12px 14px;font-size:13px;color:#e07070;margin-bottom:14px;display:none}
+.err.on{display:block}
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="logo">
+    <div class="logo-badge">✦ BookTok Studio ✦</div>
+    <h1>Bem-vinda</h1>
+  </div>
+
+  <div class="err on" id="err" style="display:<?= isset($_GET['error']) ? 'block' : 'none' ?>">
+    E-mail ou senha incorretos.
+  </div>
+
+  <form method="POST" action="/login" onsubmit="check()">
+    <div class="field">
+      <label>E-mail</label>
+      <input type="email" name="email" placeholder="seu@email.com" required autocomplete="email"/>
+    </div>
+    <div class="field">
+      <label>Senha</label>
+      <input type="password" name="password" placeholder="••••••••" required autocomplete="current-password"/>
+    </div>
+    <button class="btn" type="submit">Entrar</button>
+  </form>
+</div>
+
+<script>
+  // Show error if URL has ?error=1
+  if(new URLSearchParams(location.search).get('error')){
+    document.getElementById('err').style.display='block';
+  }
+</script>
+</body>
+</html>
